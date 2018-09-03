@@ -29,6 +29,9 @@ Route.group(() => {
   Route.post('follow.:id', 'UserController.follow').middleware(['auth:jwt'])
   Route.post('unfollow.:id', 'UserController.unfollow').middleware(['auth:jwt'])
 
+  Route.get('tweets.:id', 'TweetsController.show')
+  Route.post('tweet', 'TweetsController.tweet').middleware(['auth:jwt'])
+
   Route.get(':username', 'UserController.showProfile')
 }).prefix('api')
 

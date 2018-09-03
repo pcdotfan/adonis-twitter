@@ -149,6 +149,14 @@
     mustache "^2.3.0"
     stack-trace "0.0.10"
 
+"@vuikit/icons@^0.8.1":
+  version "0.8.1"
+  resolved "http://registry.npm.taobao.org/@vuikit/icons/download/@vuikit/icons-0.8.1.tgz#b53725e3b137ba7fc20fce792b95e957bef9410c"
+
+"@vuikit/theme@^0.8.1":
+  version "0.8.1"
+  resolved "http://registry.npm.taobao.org/@vuikit/theme/download/@vuikit/theme-0.8.1.tgz#d77f4c593cd5dc0c8bdb71c4f6b3ee95c8ffa9ea"
+
 abbrev@1:
   version "1.1.1"
   resolved "http://registry.npm.taobao.org/abbrev/download/abbrev-1.1.1.tgz#f8f2c887ad10bf67f634f005b6987fed3179aac8"
@@ -7017,13 +7025,19 @@ vue-template-es2015-compiler@^1.6.0:
   version "1.6.0"
   resolved "http://registry.npm.taobao.org/vue-template-es2015-compiler/download/vue-template-es2015-compiler-1.6.0.tgz#dc42697133302ce3017524356a6c61b7b69b4a18"
 
-vue@^2.5.17:
+vue@^2.5.16, vue@^2.5.17:
   version "2.5.17"
   resolved "http://registry.npm.taobao.org/vue/download/vue-2.5.17.tgz#0f8789ad718be68ca1872629832ed533589c6ada"
 
 vuex@^3.0.1:
   version "3.0.1"
   resolved "http://registry.npm.taobao.org/vuex/download/vuex-3.0.1.tgz#e761352ebe0af537d4bb755a9b9dc4be3df7efd2"
+
+vuikit@^0.8.9:
+  version "0.8.9"
+  resolved "http://registry.npm.taobao.org/vuikit/download/vuikit-0.8.9.tgz#45a32de9dc6f8275efa1e2bd3af7b91540f85069"
+  dependencies:
+    vue "^2.5.16"
 
 watchpack@^1.4.0:
   version "1.6.0"

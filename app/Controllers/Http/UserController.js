@@ -130,7 +130,7 @@ class UserController {
     })
   }
 
-  async showProfile ({ request, params, response }) {
+  async showProfile ({ params, response }) {
     try {
       const user = await User.where('username', params.username)
                           .with('tweets', builder => {
