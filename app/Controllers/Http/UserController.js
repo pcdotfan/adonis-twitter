@@ -1,6 +1,8 @@
 'use strict'
 
 const User = use('App/Models/User')
+const Tweet = use('App/Models/Tweet')
+
 const Hash = use('Hash')
 
 class UserController {
@@ -82,6 +84,27 @@ class UserController {
     })
   }
 
+  async timeline ({ auth, response }) {
+    const user = await User.find(auth.current.user.id)
+
+    // get an array of IDs of the user's followers
+    const followersIds = await user.following().ids()
+
+    // add the user's ID also to the array
+    followersIds.push(user.id)
+
+    const tweets = await Tweet.whereIn('user_id', followersIds)
+        .with('user')
+        .with('favorites')
+        .with('replies')
+        .fetch()
+
+    return response.json({
+      status: 'success',
+      data: tweets
+    })
+  }
+
   async changePassword ({ auth, request, response }) {
     const user = auth.current.user
     const { password, newPassword } = request.only(['password', 'new_password'])
@@ -104,6 +127,67 @@ class UserController {
     return response.send({
       status: 'success',
       message: '更改密码成功'
+    })
+  }
+
+  async showProfile ({ request, params, response }) {
+    try {
+      const user = await User.where('username', params.username)
+                          .with('tweets', builder => {
+                            builder.with('user')
+                            builder.with('favorites')
+                            builder.with('replies')
+                          })
+                          .with('following')
+                          .with('followers')
+                          .with('favorites')
+                          .with('favorites.tweet', builder => {
+                            builder.with('user')
+                            builder.with('favorites')
+                            builder.with('replies')
+                          })
+                          .firstOrFail()
+      return response.json({
+        status: 'success',
+        data: user
+      })
+    } catch (error) {
+      return response.status(404).json({
+        status: 'error',
+        error: '未找到用户'
+      })
+    }
+  }
+
+  async followables ({ auth, response }) {
+    const user = auth.current.user
+    const followedUserIds = await user.following().ids()
+
+    const followables = await User.whereNot('id', user.id)
+                                .whereNotIn('id', followedUserIds)
+                                .pick(3)
+
+    return response.send({
+      status: 'success',
+      data: followables
+    })
+  }
+
+  async follow ({ request, auth, response }) {
+    const user = auth.current.user
+    await user.following().attach(request.input('user_id'))
+
+    return response.send({
+      status: 'success'
+    })
+  }
+
+  async unfollow ({ request, auth, response }) {
+    const user = auth.current.user
+    await user.following().detach(request.input('user_id'))
+
+    return response.send({
+      status: 'success'
     })
   }
 }

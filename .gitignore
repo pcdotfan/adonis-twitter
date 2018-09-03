@@ -30,3 +30,5 @@ lib-cov
 
 # IDE
 .idea
+
+*.lock
