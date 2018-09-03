@@ -29,6 +29,37 @@ class User extends Model {
   tokens () {
     return this.hasMany('App/Models/Token')
   }
+
+  tweets () {
+    return this.hasMany('App/Models/Tweet')
+  }
+
+  // 粉丝
+  followers () {
+    return this.belongsToMany(
+        'App/Models/User',
+        'user_id',
+        'follower_id'
+    ).pivotTable('followers')
+  }
+
+  // 关注
+  following () {
+    return this.belongsToMany(
+        'App/Models/User',
+        'follower_id',
+        'user_id'
+    ).pivotTable('followers')
+  }
+
+  // 收藏 / 点赞
+  favorites () {
+    return this.hasMany('App/Models/Favorites')
+  }
+
+  replies () {
+    return this.hasMany('App/Models/Reply')
+  }
 }
 
 module.exports = User

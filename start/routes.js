@@ -15,4 +15,15 @@
 
 const Route = use('Route')
 
+Route.group(() => {
+  Route.post('register', 'UserController.register')
+  Route.post('login', 'UserController.login')
+  Route.group(() => {
+    Route.get('me', 'UserController.me')
+    Route.put('update_profile', 'UserController.updateProfile')
+    Route.get('profile', 'UserController.profile')
+    Route.get('change_password', 'UserController.changePassword')
+  }).prefix('account').middleware(['auth:jwt'])
+}).prefix('api')
+
 Route.any('*', 'NuxtController.render')
